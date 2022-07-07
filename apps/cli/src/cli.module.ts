@@ -13,7 +13,7 @@ import { PrismaService } from "services/prisma.service";
 import { CliService } from "./cli.service";
 
 @Module({
-  imports: [ConfigModule.forRoot(), ConsoleModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), ConsoleModule],
   providers: [
     CliService,
     PrismaService,

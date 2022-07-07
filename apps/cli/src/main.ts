@@ -1,3 +1,5 @@
+import "isomorphic-unfetch";
+
 import { BootstrapConsole } from "nestjs-console";
 
 import { CliModule } from "./cli.module";

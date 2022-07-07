@@ -1,3 +1,5 @@
+import "isomorphic-unfetch";
+
 import { NestFactory } from "@nestjs/core";
 
 import { SchedulerModule } from "./scheduler.module";

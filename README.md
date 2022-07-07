@@ -1,9 +1,13 @@
-# Ishiro Server
+# Ishiro Backend
 
 ![Version](https://img.shields.io/badge/version-0.0.0-blue.svg?cacheSeconds=2592000)
 [![Tests](https://github.com/ishiro-io/ishiro-backend/actions/workflows/test.yaml/badge.svg)](https://github.com/ishiro-io/ishiro-backend/actions/workflows/test.yaml)
 
-> 🚀 Back-end server for Ishiro made with NestJS
+> 👺 📱 Ishiro is a platform that helps tracking anime advancement
+
+> 🚀 Back-end server made with NestJS
+
+---
 
 ## ✨ Install
 
@@ -53,5 +57,5 @@ yarn test:cov
 
 ## 📝 License
 
-Copyright © 2020 [Ishiro](https://github.com/ishiro-io).
+Copyright © 2022 [Ishiro](https://github.com/ishiro-io).
 This project is [MIT](https://github.com/ishiro-io/ishiro-backend/blob/master/LICENSE) licensed.

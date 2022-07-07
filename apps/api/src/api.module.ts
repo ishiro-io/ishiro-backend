@@ -12,7 +12,7 @@ import { UserModule } from "./modules/user/user.module";
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     AnimeModule,
     CategoryModule,
     EpisodeModule,

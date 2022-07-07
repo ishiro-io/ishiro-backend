@@ -1,0 +1,7 @@
+query AniListMediaPage($page: Int!, $perPage: Int!, $sort: [MediaSort]) {
+  Page(page: $page, perPage: $perPage) {
+    media(type: ANIME, format_not: MUSIC, sort: $sort) {
+      ...MediaPage
+    }
+  }
+}

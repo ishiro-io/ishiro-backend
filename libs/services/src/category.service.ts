@@ -53,7 +53,9 @@ export class CategoryService {
       let id = categoriesIdMap.get(name);
 
       if (!id) {
-        id = await this.category({ name }).then((category) => category?.id);
+        id = await this.category({ where: {} }).then(
+          (category) => category?.id
+        );
 
         if (id) categoriesIdMap.set(name, id);
       }
@@ -171,57 +173,29 @@ export class CategoryService {
     }
   }
 
-  async category(where: Prisma.CategoryWhereInput): Promise<Category | null> {
-    return this.prisma.category.findFirst({
-      where,
-    });
+  async category(args: Prisma.CategoryFindFirstArgs): Promise<Category | null> {
+    return this.prisma.category.findFirst(args);
   }
 
-  async categorys(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.CategoryWhereUniqueInput;
-    where?: Prisma.CategoryWhereInput;
-    orderBy?: Prisma.CategoryOrderByWithRelationInput;
-  }): Promise<Category[]> {
-    const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.category.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
+  async categorys(args: Prisma.CategoryFindManyArgs): Promise<Category[]> {
+    return this.prisma.category.findMany(args);
   }
 
-  async createCategory(data: Prisma.CategoryCreateInput): Promise<Category> {
-    return this.prisma.category.create({
-      data,
-    });
+  async createCategory(args: Prisma.CategoryCreateArgs): Promise<Category> {
+    return this.prisma.category.create(args);
   }
 
-  async updateCategory(params: {
-    where: Prisma.CategoryWhereUniqueInput;
-    data: Prisma.CategoryUpdateInput;
-  }): Promise<Category> {
-    const { where, data } = params;
-    return this.prisma.category.update({
-      data,
-      where,
-    });
+  async updateCategory(args: Prisma.CategoryUpdateArgs): Promise<Category> {
+    return this.prisma.category.update(args);
   }
 
-  async deleteCategory(
-    where: Prisma.CategoryWhereUniqueInput
-  ): Promise<Category> {
-    return this.prisma.category.delete({
-      where,
-    });
+  async deleteCategory(args: Prisma.CategoryDeleteArgs): Promise<Category> {
+    return this.prisma.category.delete(args);
   }
 
   async deleteCategorys(
-    where?: Prisma.CategoryWhereInput
+    args: Prisma.CategoryDeleteManyArgs
   ): Promise<Prisma.BatchPayload> {
-    return this.prisma.category.deleteMany({ where });
+    return this.prisma.category.deleteMany(args);
   }
 }
