@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nestgraphql {
+  provider   = "prisma-nestjs-graphql"
+  output     = "../libs/database/src/prisma"
+  emitSingle = true
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Anime {
+  id                Int          @id @default(autoincrement())
+  idAnilist         Int          @unique
+  idMal             Int?
+  idAniDB           Int?
+  idKitsu           Int?
+  title             String
+  titleFrench       String?
+  titleEnglish      String?
+  titleRomaji       String?
+  titleKanji        String?
+  description       String?
+  bannerImage       String?
+  coverImage        String?
+  format            AnimeFormat?
+  duration          Int?
+  status            AnimeStatus?
+  releaseDate       DateTime?
+  endDate           DateTime?
+  season            AnimeSeason?
+  seasonYear        Int?
+  isAdult           Boolean
+  popularityAnilist Int?
+  scoreAnilist      Float?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  categories        Category[]
+  episodes          Episode[]
+}
+
+model Category {
+  id         Int     @id @default(autoincrement())
+  name       String
+  coverImage String?
+  animes     Anime[]
+}
+
+model Episode {
+  id        Int       @id @default(autoincrement())
+  title     String?
+  number    Int
+  arcName   String?
+  airedDate DateTime?
+  length    Int?
+  isFiller  Boolean   @default(false)
+  isRecap   Boolean   @default(false)
+  anime     Anime     @relation(fields: [animeId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  animeId   Int
+}
+
+enum AnimeFormat {
+  TV
+  TV_SHORT
+  MOVIE
+  SPECIAL
+  OVA
+  ONA
+}
+
+enum AnimeStatus {
+  FINISHED
+  RELEASING
+  NOT_YET_RELEASED
+  CANCELLED
+  HIATUS
+}
+
+enum AnimeSeason {
+  WINTER
+  SPRING
+  SUMMER
+  FALL
+}

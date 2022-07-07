@@ -1,0 +1,7 @@
+{
+  "project": {
+    "name": "ishiro-backend",
+    "version": "0.0.0",
+    "description": "🚀 Back-end server for Ishiro made with NestJS"
+  }
+}
