@@ -66,7 +66,7 @@ model Episode {
   length    Int?
   isFiller  Boolean   @default(false)
   isRecap   Boolean   @default(false)
-  anime     Anime     @relation(fields: [animeId], references: [id])
+  anime     Anime     @relation(fields: [animeId], references: [id], onDelete: Cascade)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   animeId   Int
