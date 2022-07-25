@@ -15,6 +15,7 @@
     "strict": true,
     "lib": ["esnext"],
     "paths": {
+      "api/*": ["apps/api/src/*"],
       "database": ["libs/database/src"],
       "database/*": ["libs/database/src/*"],
       "services": ["libs/services/src"],

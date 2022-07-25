@@ -23,12 +23,12 @@ export class CategoryResolver {
 
   @Query(() => Category)
   async category(@Args("id", { nullable: false }) id: number) {
-    return this.categoryService.category({ id });
+    return this.categoryService.category({ where: { id } });
   }
 
   @Mutation(() => Category)
   async createCategory(@Args("data") data: CategoryCreateInput) {
-    return this.categoryService.createCategory(data);
+    return this.categoryService.createCategory({ data });
   }
 
   @Mutation(() => Category)
@@ -41,6 +41,6 @@ export class CategoryResolver {
 
   @Mutation(() => Category)
   async deleteCategory(@Args("where") where: CategoryWhereUniqueInput) {
-    return this.categoryService.deleteCategory(where);
+    return this.categoryService.deleteCategory({ where });
   }
 }

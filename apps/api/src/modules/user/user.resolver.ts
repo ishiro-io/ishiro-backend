@@ -23,12 +23,12 @@ export class UserResolver {
 
   @Query(() => User)
   async user(@Args("id", { nullable: false }) id: number) {
-    return this.userService.user({ id });
+    return this.userService.user({ where: { id } });
   }
 
   @Mutation(() => User)
   async createUser(@Args("data") data: UserCreateInput) {
-    return this.userService.createUser(data);
+    return this.userService.createUser({ data });
   }
 
   @Mutation(() => User)
@@ -41,6 +41,6 @@ export class UserResolver {
 
   @Mutation(() => User)
   async deleteUser(@Args("where") where: UserWhereUniqueInput) {
-    return this.userService.deleteUser(where);
+    return this.userService.deleteUser({ where });
   }
 }

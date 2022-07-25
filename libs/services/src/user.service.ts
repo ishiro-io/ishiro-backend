@@ -7,8 +7,8 @@ import { PrismaService } from "./prisma.service";
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async user(args: Prisma.UserFindUniqueArgs): Promise<User | null> {
-    return this.prisma.user.findUnique(args);
+  async user(args: Prisma.UserFindFirstArgs): Promise<User | null> {
+    return this.prisma.user.findFirst(args);
   }
 
   async users(args: Prisma.UserFindManyArgs): Promise<User[]> {

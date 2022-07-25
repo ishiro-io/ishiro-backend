@@ -23,12 +23,12 @@ export class EpisodeResolver {
 
   @Query(() => Episode)
   async episode(@Args("id", { nullable: false }) id: number) {
-    return this.episodeService.episode({ id });
+    return this.episodeService.episode({ where: { id } });
   }
 
   @Mutation(() => Episode)
   async createEpisode(@Args("data") data: EpisodeCreateInput) {
-    return this.episodeService.createEpisode(data);
+    return this.episodeService.createEpisode({ data });
   }
 
   @Mutation(() => Episode)
@@ -41,6 +41,6 @@ export class EpisodeResolver {
 
   @Mutation(() => Episode)
   async deleteEpisode(@Args("where") where: EpisodeWhereUniqueInput) {
-    return this.episodeService.deleteEpisode(where);
+    return this.episodeService.deleteEpisode({ where });
   }
 }

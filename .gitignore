@@ -48,6 +48,7 @@ Thumbs.db
 
 # Prisma
 libs/database/src/prisma
+prisma/migrations/**
 
 # GraphQL
 libs/database/src/graphql

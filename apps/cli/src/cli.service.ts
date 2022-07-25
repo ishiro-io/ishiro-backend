@@ -181,7 +181,9 @@ export class CliService {
       const createdEpisodes = [];
 
       for (const input of formattedInputs) {
-        const episode = await this.episodeService.createEpisode(input);
+        const episode = await this.episodeService.createEpisode({
+          data: input,
+        });
         createdEpisodes.push(episode);
       }
       spinner.info(`Successfully added ${createdEpisodes.length} episodes`);
