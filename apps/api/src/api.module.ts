@@ -5,13 +5,9 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { GraphQLFormattedError } from "graphql";
 import { GraphQLError } from "graphql";
 
-import { PrismaService } from "services/prisma.service";
+import { PrismaService } from "services";
 
-import { AnimeModule } from "./modules/anime/anime.module";
-import AuthModule from "./modules/auth/auth.module";
-import { CategoryModule } from "./modules/category/category.module";
-import { EpisodeModule } from "./modules/episode/episode.module";
-import { UserModule } from "./modules/user/user.module";
+import { AnimeModule, AuthModule, CategoryModule } from "./modules";
 
 @Module({
   imports: [
@@ -19,8 +15,6 @@ import { UserModule } from "./modules/user/user.module";
     AuthModule,
     AnimeModule,
     CategoryModule,
-    EpisodeModule,
-    UserModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,

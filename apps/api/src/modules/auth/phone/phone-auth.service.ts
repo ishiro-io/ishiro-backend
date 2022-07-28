@@ -5,7 +5,7 @@ import ms from "ms";
 import { PHONE_NUMBER_CONFIRMATION_PREFIX } from "api/constants/redisPrefixes";
 import { redisClient } from "api/utils";
 import { PhoneAuth } from "database/prisma";
-import { PrismaService } from "services/prisma.service";
+import { PrismaService } from "services";
 
 import { PhoneConnectInput } from "./phone-auth.input";
 

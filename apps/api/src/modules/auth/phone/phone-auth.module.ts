@@ -9,6 +9,4 @@ import { PhoneAuthService } from "./phone-auth.service";
   providers: [PhoneAuthService, PhoneAuthResolver, PrismaService],
   exports: [PhoneAuthService],
 })
-class PhoneAuthModule {}
-
-export default PhoneAuthModule;
+export class PhoneAuthModule {}

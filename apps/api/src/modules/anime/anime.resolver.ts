@@ -1,15 +1,12 @@
 import { Inject, forwardRef } from "@nestjs/common";
-import { Args, Info, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Info, Query, Resolver } from "@nestjs/graphql";
 import { GraphQLResolveInfo } from "graphql";
 import { fieldsList } from "graphql-fields-list";
 
-import {
-  Anime,
-  AnimeCreateInput,
-  AnimeUpdateInput,
-  AnimeWhereUniqueInput,
-} from "database/prisma";
-import { AnimeService } from "services/anime.service";
+import { Anime } from "database/prisma";
+import { AnimeService } from "services";
+
+import { FetchAnimesArgs } from "./anime.args";
 
 @Resolver(() => Anime)
 export class AnimeResolver {
@@ -19,9 +16,17 @@ export class AnimeResolver {
   ) {}
 
   @Query(() => [Anime])
-  async animes(@Info() info: GraphQLResolveInfo) {
+  async animes(
+    @Args() args: FetchAnimesArgs,
+    @Info() info: GraphQLResolveInfo
+  ) {
     const fields = fieldsList(info);
     return this.animeService.animes({
+      ...args,
+      where: {
+        ...args.where,
+        OR: [{ isAdult: args.where?.isAdult }, { isAdult: false }],
+      },
       include: {
         categories: fields.includes("categories"),
         episodes: fields.includes("episodes"),
@@ -42,23 +47,5 @@ export class AnimeResolver {
         episodes: fields.includes("episodes"),
       },
     });
-  }
-
-  @Mutation(() => Anime)
-  async createAnime(@Args("data") data: AnimeCreateInput) {
-    return this.animeService.createAnime({ data });
-  }
-
-  @Mutation(() => Anime)
-  async updateAnime(
-    @Args("where", { nullable: false }) where: AnimeWhereUniqueInput,
-    @Args("data") data: AnimeUpdateInput
-  ) {
-    return this.animeService.updateAnime({ where, data });
-  }
-
-  @Mutation(() => Anime)
-  async deleteAnime(@Args("where") where: AnimeWhereUniqueInput) {
-    return this.animeService.deleteAnime({ where });
   }
 }

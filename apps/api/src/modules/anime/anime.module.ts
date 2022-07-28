@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { AnimeService } from "services/anime.service";
-import { PrismaService } from "services/prisma.service";
+import { AnimeService, PrismaService } from "services";
 
 import { AnimeResolver } from "./anime.resolver";
 
