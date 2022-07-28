@@ -2,9 +2,9 @@ import { Injectable, Logger } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { Promise } from "bluebird";
 
-import { AniListService } from "database/external-apis/anilist.service";
+import { AniListService } from "database/external-apis";
 import { MediaSort } from "database/graphql/generated";
-import { AnimeService } from "services/anime.service";
+import { AnimeService } from "services";
 
 @Injectable()
 export class LastAddedAnimesTask {

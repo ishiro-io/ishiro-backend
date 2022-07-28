@@ -7,6 +7,7 @@ import {
   AniListMediaPage,
   MediaPageFragment,
   MediaSort,
+  PageInfoFragment,
 } from "database/graphql/generated";
 import { CategoryService } from "services/category.service";
 import sleep from "utils/sleep";
@@ -29,9 +30,14 @@ export class AniListService {
       (_, i) => i + Number(firstPage)
     );
 
-    const data = await mapSeries(indexes, (i: number) => {
+    const data = await mapSeries(indexes, async (i: number) => {
       indexCallback(i);
-      return this.fetchMediaDatabasePage(i, perPage, sort);
+      const data = await this.fetchMediaDatabasePage({
+        page: i,
+        perPage,
+        sort,
+      });
+      return data?.Page.media;
     }).then((pages) =>
       pages.flat().filter((d): d is MediaPageFragment => d !== null)
     );
@@ -39,12 +45,12 @@ export class AniListService {
     return data;
   }
 
-  async fetchMediaDatabasePage(
-    page: number,
-    perPage: number,
-    sort: MediaSort[],
-    retry = 0
-  ): Promise<MediaPageFragment[] | null> {
+  async fetchMediaDatabasePage({
+    page,
+    perPage,
+    sort,
+    retry = 0,
+  }: FetchMediaDatabasePageArgs): Promise<AnilistMediaPage | null> {
     const client = createClient({
       url: "https://graphql.anilist.co",
     });
@@ -63,15 +69,20 @@ export class AniListService {
         const waitTime = Math.abs(ratelimiteReset * 1000 - Date.now());
         await sleep(waitTime);
 
-        return this.fetchMediaDatabasePage(page, perPage, sort, retry + 1);
+        return this.fetchMediaDatabasePage({
+          page,
+          perPage,
+          sort,
+          retry: retry + 1,
+        });
       }
 
       throw new Error(`HTTP Error ${status}`);
     }
 
-    if (!data?.Page?.media) return null;
+    if (!data) return null;
 
-    return data.Page.media;
+    return data;
   }
 
   async formatMediaInputs(data: MediaPageFragment[]) {
@@ -191,8 +202,16 @@ type FetchMediaDatabaseArgs = {
   indexCallback?: (index: number) => void;
 };
 
+type FetchMediaDatabasePageArgs = {
+  page: number;
+  perPage: number;
+  sort: MediaSort[];
+  retry?: number;
+};
+
 type AnilistMediaPage = {
   Page: {
+    pageInfo: PageInfoFragment;
     media: MediaPageFragment[];
   };
 };

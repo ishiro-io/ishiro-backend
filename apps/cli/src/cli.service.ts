@@ -1,15 +1,13 @@
 import { Command, Console, createSpinner } from "nestjs-console";
 
-import { AniDBService } from "database/external-apis/anidb.service";
-import { AniListService } from "database/external-apis/anilist.service";
 import {
+  AniDBService,
+  AniListService,
   RelationType,
   RelationsService,
-} from "database/external-apis/relations.service";
+} from "database/external-apis";
 import { MediaSort } from "database/graphql/generated";
-import { AnimeService } from "services/anime.service";
-import { CategoryService } from "services/category.service";
-import { EpisodeService } from "services/episode.service";
+import { AnimeService, CategoryService, EpisodeService } from "services";
 
 @Console()
 export class CliService {
